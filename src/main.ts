@@ -7,10 +7,11 @@ async function run() {
     const name = core.getInput('name', { required: true });
     const url = core.getInput('url', { required: true });
     const status = JobStatus.parse(core.getInput('status', { required: true }));
+    const message = core.getInput('message', { required: true });
 
-    core.debug(`input params: name=${name}, status=${status}, url=${url}`);
+    core.debug(`input params: name=${name}, status=${status}, url=${url}, message=${message}`);
 
-    await GoogleChat.notify(name, url, status);
+    await GoogleChat.notify(name, url, status, message);
     console.info('Sent message.')
   } catch (error: unknown) {
     if (error instanceof Error) {
