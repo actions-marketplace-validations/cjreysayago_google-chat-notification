@@ -1,4 +1,4 @@
-name: 'google-chat-notification'
+name: 'cjreysayago@google-chat-notification'
 description: 'Google Chat Notification for GitHub Actions'
 author: 'Co-qn'
 inputs:
@@ -10,6 +10,9 @@ inputs:
     required: true
   status:
     description: 'job status.'
+    required: true
+  message:
+    description: 'job message.'
     required: true
 runs:
   using: 'node16'

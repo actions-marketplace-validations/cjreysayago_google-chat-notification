@@ -872,8 +872,9 @@ function run() {
             const name = core.getInput('name', { required: true });
             const url = core.getInput('url', { required: true });
             const status = JobStatus.parse(core.getInput('status', { required: true }));
-            core.debug(`input params: name=${name}, status=${status}, url=${url}`);
-            yield GoogleChat.notify(name, url, status);
+            const message = core.getInput('message', { required: true });
+            core.debug(`input params: name=${name}, status=${status}, url=${url}, message=${message}`);
+            yield GoogleChat.notify(name, url, status, message);
             console.info('Sent message.');
         }
         catch (error) {
@@ -2616,7 +2617,7 @@ const textButton = (text, url) => ({
         onClick: { openLink: { url } }
     }
 });
-function notify(name, url, status) {
+function notify(name, url, status, message) {
     return __awaiter(this, void 0, void 0, function* () {
         const { owner, repo } = github.context.repo;
         const { eventName, sha, ref } = github.context;
@@ -2637,6 +2638,12 @@ function notify(name, url, status) {
                         },
                         {
                             widgets: [
+                                {
+                                    keyValue: {
+                                        topLabel: "Details",
+                                        content: message,
+                                    }
+                                },
                                 {
                                     keyValue: {
                                         topLabel: "repository",
